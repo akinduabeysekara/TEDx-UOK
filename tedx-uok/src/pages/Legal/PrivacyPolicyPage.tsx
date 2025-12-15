@@ -9,20 +9,20 @@ export default function PrivacyPolicyPage() {
           <div className="text-center space-y-4">
             <p className="text-sm uppercase text-[#EB0028]">LEGAL</p>
             <h1 className="text-4xl md:text-5xl font-bold text-white">
-              Privacy & Data Policy
+              Privacy & <span className="text-[#EB0028]">Data Policy</span>
             </h1>
           </div>
 
           {/* Content */}
-          <div className="space-y-8 text-white/80 leading-relaxed text-center">
-            <p className="text-lg text-white/90">
+          <div className="space-y-8 text-white leading-relaxed text-center">
+            <p className="text-lg">
               TEDx UOK is committed to protecting your privacy. This policy explains how we collect, 
               use, and safeguard your personal information.
             </p>
 
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">Information We Collect</h2>
-              <ul className="space-y-2 text-center list-none">
+              <ul className="space-y-2 text-center text-white list-disc list-inside">
                 <li>Name, email address, and phone number</li>
                 <li>University affiliation and student ID (if applicable)</li>
                 <li>Volunteer application information</li>
@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
 
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">How We Use Your Information</h2>
-              <ul className="space-y-2 text-center list-none">
+              <ul className="space-y-2 text-center text-white list-disc list-inside">
                 <li>Process event registrations and ticket purchases</li>
                 <li>Communicate event details and updates</li>
                 <li>Manage volunteer applications</li>
@@ -42,8 +42,17 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="space-y-4">
+              <h2 className="text-2xl font-semibold text-white">Data Storage and Security</h2>
+              <p>
+                Your data is stored securely using industry-standard security measures. We implement 
+                appropriate technical and organizational measures to protect your personal information 
+                against unauthorized access, alteration, disclosure, or destruction.
+              </p>
+            </div>
+
+            <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">Your Rights</h2>
-              <ul className="space-y-2 text-center list-none">
+              <ul className="space-y-2 text-center text-white list-disc list-inside">
                 <li>Access your personal data</li>
                 <li>Correct inaccurate or incomplete data</li>
                 <li>Request deletion of your data</li>

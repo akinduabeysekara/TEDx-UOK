@@ -9,20 +9,20 @@ export default function CodeOfConductPage() {
           <div className="text-center space-y-4">
             <p className="text-sm uppercase text-[#EB0028]">LEGAL</p>
             <h1 className="text-4xl md:text-5xl font-bold text-white">
-              Code of Conduct
+              Code of <span className="text-[#EB0028]">Conduct</span>
             </h1>
           </div>
 
           {/* Content */}
-          <div className="space-y-8 text-white/80 leading-relaxed text-center">
-            <p className="text-lg text-white/90">
+          <div className="space-y-8 text-white leading-relaxed text-center">
+            <p className="text-lg">
               We invite you to join TEDx UOK in a spirit of curiosity, friendliness, open-mindedness, 
               and respect. We will not tolerate harassment, in any form, at a TEDx UOK event.
             </p>
 
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">At TEDx UOK, You Agree To:</h2>
-              <ul className="space-y-2 text-center list-none">
+              <ul className="space-y-2 text-center text-white list-disc list-inside">
                 <li>Respect the boundaries of other attendees</li>
                 <li>Avoid aggressively pushing your own services, products, or causes</li>
                 <li>Respect confidentiality requests by speakers and other attendees</li>
@@ -35,7 +35,7 @@ export default function CodeOfConductPage() {
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">Unacceptable Behavior</h2>
               <p>These behaviors don't belong at TEDx UOK:</p>
-              <ul className="space-y-2 text-center list-none">
+              <ul className="space-y-2 text-center text-white list-disc list-inside">
                 <li>Invasion of privacy or taking photos without permission</li>
                 <li>Posting personal details about someone else without permission</li>
                 <li>Disruptive behavior, excessive drinking, stalking, or threatening anyone</li>

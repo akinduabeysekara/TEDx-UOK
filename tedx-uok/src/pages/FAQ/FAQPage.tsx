@@ -152,9 +152,9 @@ export default function FAQPage() {
             FAQ
           </p>
           <h1 className="text-4xl md:text-5xl font-bold text-white">
-            Frequently Asked Questions
+            Frequently <span className="text-[#EB0028]">Asked Questions</span>
           </h1>
-          <p className="mx-auto max-w-2xl text-white/70">
+          <p className="mx-auto max-w-2xl text-white">
             Answers to common questions about attending TEDxUoK.
           </p>
         </div>
@@ -190,7 +190,7 @@ export default function FAQPage() {
                     </button>
 
                     {isOpen && (
-                      <p className="mt-4 text-white/75 leading-relaxed text-left">
+                      <p className="mt-4 text-white leading-relaxed text-left">
                         {item.answer}
                       </p>
                     )}

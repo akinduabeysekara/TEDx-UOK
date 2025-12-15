@@ -9,13 +9,13 @@ export default function LicensingPage() {
           <div className="text-center space-y-4">
             <p className="text-sm uppercase text-[#EB0028]">LEGAL</p>
             <h1 className="text-4xl md:text-5xl font-bold text-white">
-              Licensing Statement
+              <span className="text-[#EB0028]">Licensing</span> Statement
             </h1>
           </div>
 
           {/* Content */}
-          <div className="space-y-8 text-white/80 leading-relaxed text-center">
-            <p className="text-lg text-white/90">
+          <div className="space-y-8 text-white leading-relaxed text-center">
+            <p className="text-lg">
               TEDx UOK is an independently organized TEDx event operating under a license from TED Conferences LLC.
             </p>
 
@@ -39,13 +39,22 @@ export default function LicensingPage() {
 
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">Content Guidelines</h2>
-              <ul className="space-y-2 text-center list-none">
+              <ul className="space-y-2 text-center text-white list-disc list-inside">
                 <li>Scientific claims must be factual and backed by research</li>
                 <li>No promotion of commercial products or services</li>
                 <li>No pseudo-science, conspiracy theories, or zealotry</li>
                 <li>Content aims to educate and enlighten, not divide</li>
                 <li>Proper permissions obtained for copyrighted material</li>
               </ul>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold text-white">Speaker Responsibility</h2>
+              <p>
+                Our speakers participate on a volunteer basis and are solely responsible for the content 
+                of their presentations. It is their responsibility to obtain any copyright permissions 
+                needed for third-party materials they use.
+              </p>
             </div>
 
             <p className="text-sm text-white/50 pt-8 border-t border-[#1F1F1F]">

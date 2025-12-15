@@ -9,13 +9,13 @@ export default function AccessibilityPage() {
           <div className="text-center space-y-4">
             <p className="text-sm uppercase text-[#EB0028]">LEGAL</p>
             <h1 className="text-4xl md:text-5xl font-bold text-white">
-              Accessibility Statement
+              <span className="text-[#EB0028]">Accessibility</span> Statement
             </h1>
           </div>
 
           {/* Content */}
-          <div className="space-y-8 text-white/80 leading-relaxed text-center">
-            <p className="text-lg text-white/90">
+          <div className="space-y-8 text-white leading-relaxed text-center">
+            <p className="text-lg">
               TEDx UOK is committed to ensuring digital accessibility for people with disabilities. 
               We are continually improving the user experience for everyone and applying the relevant 
               accessibility standards.
@@ -32,7 +32,7 @@ export default function AccessibilityPage() {
 
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">Accessibility Features</h2>
-              <ul className="space-y-2 text-center list-none">
+              <ul className="space-y-2 text-center text-white list-disc list-inside">
                 <li>Alternative text for images</li>
                 <li>Keyboard navigation support</li>
                 <li>Clear and consistent navigation structure</li>
@@ -48,7 +48,7 @@ export default function AccessibilityPage() {
               <p>
                 Our physical event at the University of Kelaniya is committed to being accessible to all attendees:
               </p>
-              <ul className="space-y-2 text-center list-none">
+              <ul className="space-y-2 text-center text-white list-disc list-inside">
                 <li>Wheelchair accessible venue with ramps and elevators</li>
                 <li>Reserved seating for individuals with mobility needs</li>
                 <li>Sign language interpretation available upon request</li>
