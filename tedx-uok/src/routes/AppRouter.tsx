@@ -6,6 +6,7 @@ import HomePage from "../pages/Home/HomePage";
 // import SpeakersPage from "../pages/Speakers/SpeakersPage";
 import RegistrationPage from "../pages/Registration/RegistrationPage";
 import Agenda from "../pages/Agenda/AgendaPage";
+import PressMedia from "../pages/PressAndMedia/PressAndMediaPage";
 // import Theme from "../pages/Theme/Theme";
 
 function AnimatedRoutes() {
@@ -26,6 +27,14 @@ function AnimatedRoutes() {
         element={
           <div key={location.pathname} className="page-transition">
             <Agenda />
+          </div>
+        }
+      />
+      <Route
+        path="/pressandmedia"
+        element={
+          <div key={location.pathname} className="page-transition">
+            <PressMedia />
           </div>
         }
       />
