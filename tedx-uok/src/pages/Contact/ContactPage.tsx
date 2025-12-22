@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormInput } from '../../components/forms/FormInput';
 import { FormSelect } from '../../components/forms/FormSelect';
 import { FormTextarea } from '../../components/forms/FormTextarea';
@@ -23,7 +22,7 @@ interface FormErrors {
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
-    email: '',
+    email:  '',
     message: '',
     category: '',
   });
@@ -35,8 +34,22 @@ export const ContactPage: React.FC = () => {
     text: string;
   } | null>(null);
 
+  // Set body background to black when component mounts
+  useEffect(() => {
+    document.body.style.backgroundColor = '#000000';
+    document.body.style.margin = '0';
+    document. body.style.padding = '0';
+    document.documentElement. style.backgroundColor = '#000000';
+    
+    return () => {
+      // Cleanup when component unmounts
+      document.body.style.backgroundColor = '';
+      document. documentElement.style.backgroundColor = '';
+    };
+  }, []);
+
   const categoryOptions = [
-    { value: 'general', label: 'General Inquiry' },
+    { value:  'general', label: 'General Inquiry' },
     { value: 'sponsorship', label: 'Sponsorship' },
     { value: 'partnership', label: 'Partnership' },
     { value: 'media', label: 'Media & Press' },
@@ -56,7 +69,7 @@ export const ContactPage: React.FC = () => {
     // Validate name
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
-    } else if (formData.name.trim().length < 2) {
+    } else if (formData. name.trim().length < 2) {
       newErrors.name = 'Name must be at least 2 characters';
     }
 
@@ -68,7 +81,7 @@ export const ContactPage: React.FC = () => {
     }
 
     // Validate message
-    if (!formData.message.trim()) {
+    if (!formData.message. trim()) {
       newErrors.message = 'Message is required';
     } else if (formData.message.trim().length < 10) {
       newErrors.message = 'Message must be at least 10 characters';
@@ -77,7 +90,7 @@ export const ContactPage: React.FC = () => {
     // Category is optional, no validation needed
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object. keys(newErrors).length === 0;
   };
 
   const handleChange = (name: string, value: string) => {
@@ -95,7 +108,7 @@ export const ContactPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e:  React.FormEvent) => {
     e.preventDefault();
     setSubmitMessage(null);
 
@@ -117,13 +130,13 @@ export const ContactPage: React.FC = () => {
       console.log('Contact Data:', formData);
 
       setSubmitMessage({
-        type: 'success',
-        text: 'Thank you for contacting us! We will get back to you soon.',
+        type:  'success',
+        text:  'Thank you for contacting us! We will get back to you soon.',
       });
 
       // Reset form after successful submission
       setFormData({
-        name: '',
+        name:  '',
         email: '',
         message: '',
         category: '',
@@ -140,88 +153,114 @@ export const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto w-full">
-        <div className="text-center mb-12">
-         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            Contact <span className="text-[#EB0028]">Us</span>
-          </h1>
-          <p className="text-gray-400 text-lg">
-            Have questions?  We'd love to hear from you
-          </p>
-        </div>
+    <>
+      <style>{`
+        body, html, #root {
+          background-color:  #000000 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        * {
+          letter-spacing:  0 !important;
+        }
+      `}</style>
 
-        <div className="bg-[#0E0E0E] border border-[#1F1F1F] rounded-xl sm:rounded-2xl p-6 sm:p-8">
-          {submitMessage && (
-            <div className="mb-6">
-              <FormMessage
-                type={submitMessage.type}
-                message={submitMessage.text}
-                onClose={() => setSubmitMessage(null)}
-              />
+      <div
+        style={{
+          backgroundColor: '#000000',
+          minHeight: '100vh',
+          width: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+      >
+        <div className="min-h-screen bg-black py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg: px-8">
+          <div className="max-w-3xl mx-auto w-full">
+            <div className="text-center mb-12">
+              <h1 className="text-3xl sm:text-4xl md: text-5xl font-bold mb-4" style={{ color: '#FFFFFF', letterSpacing: '0' }}>
+                Contact <span style={{ color: '#EB0028' }}>Us</span>
+              </h1>
+              <p className="text-lg" style={{ color: '#FFFFFF', letterSpacing: '0' }}>
+                Have questions? We'd love to hear from you
+              </p>
             </div>
-          )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <FormInput
-              label="Name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter your name"
-              error={errors.name}
-              required
-            />
+            <div className="bg-[#0E0E0E] border border-[#1F1F1F] rounded-xl sm:rounded-2xl p-6 sm:p-8">
+              {submitMessage && (
+                <div className="mb-6">
+                  <FormMessage
+                    type={submitMessage. type}
+                    message={submitMessage.text}
+                    onClose={() => setSubmitMessage(null)}
+                  />
+                </div>
+              )}
 
-            <FormInput
-              label="Email Address"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your. email@example.com"
-              error={errors.email}
-              required
-            />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <FormInput
+                  label="Name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter your name"
+                  error={errors.name}
+                  required
+                />
 
-            <FormSelect
-              label="Category (Optional)"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              options={categoryOptions}
-              placeholder="Select a category"
-              error={errors.category}
-              required={false}
-            />
+                <FormInput
+                  label="Email Address"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your.email@example.com"
+                  error={errors.email}
+                  required
+                />
 
-            <FormTextarea
-              label="Message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Tell us what's on your mind..."
-              error={errors.message}
-              required
-              rows={5}
-            />
+                <FormSelect
+                  label="Category (Optional)"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  options={categoryOptions}
+                  placeholder="Select a category"
+                  error={errors.category}
+                  required={false}
+                />
 
-            <div className="pt-4">
-              <SubmitButton loading={loading}>
-                Send Message
-              </SubmitButton>
+                <FormTextarea
+                  label="Message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell us what's on your mind..."
+                  error={errors.message}
+                  required
+                  rows={5}
+                />
+
+                <div className="pt-4">
+                  <SubmitButton loading={loading}>
+                    Send Message
+                  </SubmitButton>
+                </div>
+              </form>
+
+              <div className="mt-6 text-center">
+                <p className="text-gray-500 text-sm" style={{ letterSpacing:  '0' }}>
+                  We typically respond within 24-48 hours
+                </p>
+              </div>
             </div>
-          </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-gray-500 text-sm">
-              We typically respond within 24-48 hours
-            </p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

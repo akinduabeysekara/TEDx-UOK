@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface FormInputProps {
   label: string;
   name: string;
-  type?:  'text' | 'email' | 'tel' | 'url';
+  type?:  string;
   value:  string;
   onChange: (name: string, value: string) => void;
   placeholder?: string;
@@ -21,26 +21,60 @@ export const FormInput: React.FC<FormInputProps> = ({
   error,
   required = false,
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const getBorderColor = () => {
+    if (error) return '#EB0028';
+    if (isFocused || isHovered) return '#EB0028';
+    return '#1F1F1F';
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(name, e.target.value);
+  };
+
   return (
-    <div className="w-full">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-300 mb-2">
-        {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+    <div className="space-y-2">
+      <label 
+        htmlFor={name} 
+        className="block text-sm font-medium text-gray-300" 
+        style={{ letterSpacing: '0', textAlign: 'left' }}
+      >
+        {label} {required && <span style={{ color: '#EB0028' }}>*</span>}
       </label>
       <input
+        type={type}
         id={name}
         name={name}
-        type={type}
         value={value}
-        onChange={(e) => onChange(name, e.target.value)}
+        onChange={handleChange}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         placeholder={placeholder}
+        style={{
+          transition: 'border-color 0.3s ease',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: getBorderColor(),
+          backgroundColor: '#0E0E0E',
+          borderRadius: '0.5rem',
+          padding: '0.75rem 1rem',
+          width: '100%',
+          color: '#FFFFFF',
+          outline: 'none',
+          letterSpacing: '0',
+        }}
         required={required}
-        className={`w-full px-4 py-3 bg-[#1A1A1A] border ${
-          error ? 'border-red-500' : 'border-[#2A2A2A]'
-        } rounded-lg text-white placeholder-gray-500 focus:outline-none focus: ring-2 focus:ring-[#EB0028] focus:border-transparent transition-all`}
+        aria-invalid={error ? 'true' :  'false'}
+        aria-describedby={error ? `${name}-error` : undefined}
       />
       {error && (
-        <p className="mt-1 text-sm text-red-500">{error}</p>
+        <p id={`${name}-error`} className="text-sm mt-1" style={{ color: '#EB0028', letterSpacing: '0', textAlign: 'left' }}>
+          {error}
+        </p>
       )}
     </div>
   );
