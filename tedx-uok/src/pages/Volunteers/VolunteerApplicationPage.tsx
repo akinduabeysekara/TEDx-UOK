@@ -23,7 +23,7 @@ export const VolunteerApplicationPage:  React.FC = () => {
       icon: (
         <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-          <polyline points="3. 27 6.96 12 12.01 20.73 6.96"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
           <line x1="12" y1="22.08" x2="12" y2="12"/>
         </svg>
       ),
@@ -125,8 +125,8 @@ export const VolunteerApplicationPage:  React.FC = () => {
 
   const benefits = [
     {
-      title: 'TEDx Experience',
-      description: 'Be part of a globally recognized event and the TEDx community.',
+      title: (<>TED<sup>x</sup> Experience</>),
+      description: (<>Be part of a globally recognized event and the TED<sup>x</sup> community.</>),
       icon: (
         <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="12" cy="12" r="10"/>
@@ -158,11 +158,11 @@ export const VolunteerApplicationPage:  React.FC = () => {
     },
     {
       title:  'Certificate',
-      description: 'Receive an official TEDx volunteer certificate upon completion.',
+      description: (<>Receive an official TED<sup>x</sup> volunteer certificate upon completion.</>),
       icon: (
         <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="12" cy="8" r="7"/>
-          <polyline points="8. 21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
         </svg>
       ),
     },
@@ -179,14 +179,14 @@ export const VolunteerApplicationPage:  React.FC = () => {
           <path d="M12 14h.01"/>
           <path d="M16 14h.01"/>
           <path d="M8 18h.01"/>
-          <path d="M12 18h. 01"/>
+          <path d="M12 18h.01"/>
           <path d="M16 18h.01"/>
         </svg>
       ),
     },
     {
       title: 'Resume Builder',
-      description: 'Add prestigious TEDx experience to your professional profile.',
+      description: (<>Add prestigious TED<sup>x</sup> experience to your professional profile.</>),
       icon: (
         <svg className="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -205,7 +205,7 @@ export const VolunteerApplicationPage:  React.FC = () => {
         body, html, #root {
           background-color: #000000 !important;
           margin: 0 !important;
-          padding: 0 ! important;
+          padding: 0 !important;
         }
         * {
           letter-spacing: 0 !important;
@@ -215,14 +215,9 @@ export const VolunteerApplicationPage:  React.FC = () => {
       <div style={{ 
         backgroundColor: '#000000', 
         minHeight: '100vh', 
-        width: '100%',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom:  0
+        width: '100%'
       }}>
-        <div className="min-h-screen bg-black">
+        <div className="bg-black">
           {/* Hero Section */}
           <section className="bg-black py-32 px-4">
             <div className="max-w-4xl mx-auto text-center">

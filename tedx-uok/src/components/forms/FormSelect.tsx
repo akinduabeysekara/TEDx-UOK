@@ -9,6 +9,7 @@ interface FormSelectProps {
   placeholder?: string;
   error?: string;
   required?: boolean;
+  disabled?: boolean;
 }
 
 export const FormSelect: React.FC<FormSelectProps> = ({
@@ -20,6 +21,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
   placeholder = 'Select an option',
   error,
   required = false,
+  disabled = false,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -52,6 +54,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
         onBlur={() => setIsFocused(false)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        disabled={disabled}
         style={{
           transition: 'border-color 0.3s ease',
           borderWidth: '2px',
@@ -63,8 +66,9 @@ export const FormSelect: React.FC<FormSelectProps> = ({
           width: '100%',
           color: value ?  '#FFFFFF' : '#6B7280',
           outline:  'none',
-          cursor: 'pointer',
+          cursor: disabled ? 'not-allowed' : 'pointer',
           letterSpacing: '0',
+          opacity: disabled ? 0.5 : 1,
         }}
         required={required}
         aria-invalid={error ? 'true' : 'false'}

@@ -4,6 +4,7 @@ import { FormSelect } from '../../components/forms/FormSelect';
 import { FormTextarea } from '../../components/forms/FormTextarea';
 import { SubmitButton } from '../../components/forms/SubmitButton';
 import { FormMessage } from '../../components/forms/FormMessage';
+import { supabase } from '../../lib/supabase';
 
 interface ContactFormData {
   name: string;
@@ -123,11 +124,30 @@ export const ContactPage: React. FC = () => {
     setLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Insert contact message into Supabase
+      const { data, error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            category: formData.category || null,
+            message: formData.message,
+            status: 'New',
+          },
+        ])
+        .select();
 
-      // Log the form data (in production, this would be sent to backend)
-      console.log("Contact Data:", formData);
+      if (error) {
+        console.error('Supabase error:', error);
+        setSubmitMessage({
+          type: "error",
+          text: error.message || "Failed to send message. Please try again.",
+        });
+        return;
+      }
+
+      console.log("Contact message submitted:", data);
 
       setSubmitMessage({
         type:  'success',
@@ -143,6 +163,7 @@ export const ContactPage: React. FC = () => {
       });
       setErrors({});
     } catch (error) {
+      console.error('Contact form error:', error);
       setSubmitMessage({
         type: "error",
         text: "Something went wrong. Please try again.",
@@ -169,23 +190,32 @@ export const ContactPage: React. FC = () => {
         style={{
           backgroundColor: '#000000',
           minHeight: '100vh',
-          width: '100%',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          width: '100%'
         }}
       >
-        <div className="min-h-screen bg-black py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg: px-8">
+        <div className="bg-black py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg: px-8">
           <div className="max-w-3xl mx-auto w-full">
             <div className="text-center mb-12">
               <h1 className="text-3xl sm:text-4xl md: text-5xl font-bold mb-4" style={{ color: '#FFFFFF', letterSpacing: '0' }}>
                 Contact <span style={{ color: '#EB0028' }}>Us</span>
               </h1>
-              <p className="text-lg" style={{ color: '#FFFFFF', letterSpacing: '0' }}>
+              <p className="text-lg mb-4" style={{ color: '#FFFFFF', letterSpacing: '0' }}>
                 Have questions? We'd love to hear from you
               </p>
+              
+              {/* Trust-building message */}
+              <div className="mt-6 max-w-2xl mx-auto bg-[#0E0E0E] border border-[#1F1F1F] rounded-lg p-4">
+                <div className="flex items-start space-x-3">
+                  <svg className="w-6 h-6 text-[#EB0028] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                  </svg>
+                  <div className="text-left">
+                    <p className="text-gray-300 text-sm" style={{ letterSpacing: '0' }}>
+                      <strong className="text-white">We're here to help!</strong> Our team typically responds within 24-48 hours. For urgent inquiries, please indicate "Urgent" in your message.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="bg-[#0E0E0E] border border-[#1F1F1F] rounded-xl sm:rounded-2xl p-6 sm:p-8">
