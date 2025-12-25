@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
+/* -------------------------------------------------------------------------- */
+/*                                    FONTS                                   */
+/* -------------------------------------------------------------------------- */
+
 @font-face {
   font-family: "HelveticaNeue";
   src: url("./assets/fonts/HelveticaNeueHv.ttf") format("truetype");
@@ -33,17 +37,24 @@
   font-display: swap;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                    BASE                                    */
+/* -------------------------------------------------------------------------- */
+
 @layer base {
   :root {
-    /* TEDx Official Colors */
-    --tedx-red: 348 100% 46%; 
-    --tedx-black: 0 0% 0%;    
-    --tedx-white: 0 0% 100%; 
-    
-    /* Card styling */
-    --card-dark: 0 0% 5.5%;   
-    --card-border: 0 0% 12%;  
-    
+    /* TEDx Official Colors & Helpers */
+    /* HSL values are used for compatibility with Tailwind opacity modifiers */
+    --tedx-red: 348 100% 46%;
+    --tedx-black: 0 0% 0%;
+    --tedx-white: 0 0% 100%;
+
+    /* Legacy Hex variables from strictly brand-guided CSS (adapted to map to HSL where appropriate or kept as Hex if unique) */
+    --black: #000000;
+    --white: #FFFFFF;
+    --card-bg: #0E0E0E;
+    --card-border: #1F1F1F;
+
     /* Shadcn/UI Compatible Tokens */
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
@@ -84,9 +95,12 @@
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 0 0% 12%;
     --sidebar-ring: 348 100% 46%;
+
+    /* Enforce Dark Scheme */
+    color-scheme: dark;
   }
 
-  /* Dark mode overrides (keeping uniform for Neo Minimalism) */
+  /* Dark mode overrides (Unified) */
   .dark {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
@@ -108,10 +122,7 @@
     --input: 0 0% 12%;
     --ring: 348 100% 46%;
   }
-}
 
-
-@layer base {
   * {
     @apply border-border;
   }
@@ -122,23 +133,127 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
+    font-family: "HelveticaNeue", system-ui, Avenir, Helvetica, Arial, sans-serif;
     font-weight: 400;
+    line-height: 1.5;
     letter-spacing: 0;
     margin: 0;
+    min-width: 320px;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
-    font-weight: 800; 
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
     letter-spacing: 0;
   }
-  
+
+  h1 {
+    font-size: 3.2em;
+  }
+
+  /* Navbar Link Styling */
   a {
     font-weight: 500;
-    text-decoration: inherit;
-    transition: color 0.25s;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: hsl(var(--tedx-red));
+  }
+
+  /* Buttons Reset */
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+
+  button:focus-visible {
+    outline: 2px solid hsl(var(--tedx-red));
+    outline-offset: 2px;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                COMPONENTS                                  */
+/* -------------------------------------------------------------------------- */
+
+@layer components {
+
+  /* Button Variants */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.5rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    background: hsl(var(--tedx-red));
+    color: var(--white);
+  }
+
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background: #cf001f;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: hsl(var(--tedx-red));
+    border: 1px solid hsl(var(--tedx-red));
+  }
+
+  .btn-secondary:hover,
+  .btn-secondary:focus {
+    background: rgba(235, 0, 40, 0.1);
+  }
+
+  /* Core Card Style */
+  .card-core {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Page Transition */
+  .page-transition {
+    animation: fadeInUp 360ms ease both;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                UTILITIES                                   */
+/* -------------------------------------------------------------------------- */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -147,6 +262,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -157,15 +273,19 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
 @keyframes countdown-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.02);
   }

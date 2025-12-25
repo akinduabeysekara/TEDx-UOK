@@ -4,18 +4,23 @@ import { Instagram, Facebook, Linkedin, Twitter } from "lucide-react";
 const footerLinks = {
   quickLinks: [
     { name: "Speakers", href: "/speakers" },
-    { name: "Agenda", href: "/#agenda" },
-    { name: "Venue", href: "/contact" },
+    { name: "FAQ", href: "/faq" },
+    { name: "Agenda", href: "/agenda" },
+    { name: "Venue", href: "/venue" },
     { name: "Team", href: "/team" },
+    { name: "Press & Media", href: "/media" },
+    { name: "Volunteering", href: "/volunteer" },
   ],
   about: [
     { name: "About TED", href: "/about#ted" },
     { name: "About TEDx", href: "/about#tedx" },
-    { name: "About TEDxUOK", href: "/about#tedxuok" },
+    { name: "About TEDxUoK", href: "/about#tedxuok" },
   ],
   legal: [
     { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
+    { name: "Code of Conduct", href: "/code-of-conduct" },
+    { name: "Accessibility", href: "/accessibility" },
+    { name: "Licensing", href: "/licensing" },
     {
       name: "TEDx Rules",
       href: "https://www.ted.com/about/our-organization/our-policies-terms/tedx-rules",
@@ -29,6 +34,7 @@ const socials = [
   { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
   { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
   { icon: Twitter, href: "https://x.com", label: "X (Twitter)" },
+
 ];
 
 export default function Footer() {
@@ -49,7 +55,7 @@ export default function Footer() {
                 <span className="absolute top-[-10%]">x</span>
                 <span className="opacity-0">x</span>
               </span>
-              <span className="text-white">UOK</span>
+              <span className="text-white">UoK</span>
             </Link>
             <p className="text-white/50 text-sm leading-relaxed text-left">
               Ideas worth spreading. An independently organized TEDx event at
@@ -150,7 +156,7 @@ export default function Footer() {
                 <span className="absolute top-[-20%]">x</span>
                 <span className="opacity-0">x</span>
               </span>
-              UOK
+              UoK
             </span>
             .
           </p>

@@ -1,4 +1,13 @@
-import { supabase } from "../../api/supabaseClient";
+import About from "../../components/About";
+import Countdown from "../../components/Countdown";
+import CTASection from "../../components/CTASection";
+import Hero from "../../components/Hero";
+import Highlights, { type Highlight } from "../../components/Highlights";
+import Speakers, { type Speaker } from "../../components/Speakers";
+// import { Footer } from "../../components/layout/Footer";
+// import { Navbar } from "../../components/layout/Navbar";
+import { Handshake, Lightbulb, Mic2, Users } from "lucide-react";
+import { useEffect } from "react";
 
 // Import ALL Hooks
 import { useEvents } from "../../hooks/useEvents";
@@ -30,43 +39,18 @@ const getImageUrl = (path: string | null, bucketName: string) => {
 };
 
 const HomePage = () => {
-  const { event, loading: eventLoading } = useEvents();
-  const { speakers: rawSpeakers, loading: speakersLoading } = useSpeakers(3);
-  const { partners: rawPartners, loading: partnersLoading } = usePartners();
+  // SEO: Set page title and meta description
+  useEffect(() => {
+    document.title = "TEDxUOK - Ideas Worth Spreading | University of Kelaniya";
 
-  if (eventLoading || speakersLoading || partnersLoading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center text-white">
-        <div className="animate-pulse flex flex-col items-center">
-          <div className="h-8 w-8 bg-[#EB0028] rounded-full mb-4 animate-bounce"></div>
-          <p className="tracking-widest uppercase text-sm">
-            Setting The Stage...
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  const realSpeakers: Speaker[] = rawSpeakers.map((s) => ({
-    id: s.id,
-    name: s.full_name,
-    title: s.title,
-    talkTitle: s.talk_title || "To Be Announced",
-    image: getImageUrl(s.photo_url, SPEAKER_BUCKET),
-  }));
-
-  const realPartners: Partner[] = rawPartners.map((p) => ({
-    id: p.id,
-    name: p.name,
-    tier: p.tier,
-    logo: getImageUrl(p.logo_url, PARTNER_BUCKET),
-  }));
-
-  const eventDate = event?.date || null;
-  console.log(eventDate);
-  const eventVenue = event?.venues?.name || null;
-  const theme = event?.theme || null;
-  const description = event?.description || null;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        "content",
+        "An independently organized TEDx event at the University of Kelaniya. Join us for inspiring talks, innovative ideas, and community impact."
+      );
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-background relative top-[-65px]">

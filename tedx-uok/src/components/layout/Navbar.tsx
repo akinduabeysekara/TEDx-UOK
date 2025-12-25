@@ -14,15 +14,17 @@ export default function Navbar() {
       label: "About",
       // Parent is not a link itself, but a trigger
       subItems: [
-        { to: "/about#ted", label: "TED" },
-        { to: "/about#tedx", label: "TEDx" },
-        { to: "/about#tedxuok", label: "TEDxUOK" },
-      ],
+        { to: '/theme', label: 'Theme 2026' },
+        { to: '/about#ted', label: 'TED' },
+        { to: '/about#tedx', label: 'TEDx' },
+        { to: '/about#tedxuok', label: 'TEDxUoK' },
+      ]
     },
-    { to: "/speakers", label: "Speakers" },
-    { to: "/team", label: "Team" },
-    { to: "/partners", label: "Partners" },
-    { to: "/contact", label: "Contact" },
+    { to: '/speakers', label: 'Speakers' },
+    { to: '/agenda', label: 'Agenda' },
+    { to: '/blog', label: 'Blog' },
+    { to: '/partners', label: 'Partners' },
+    { to: '/contact', label: 'Contact' },
   ];
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -48,16 +50,13 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a
-              href="/"
-              className="flex items-center gap-1 font-extrabold text-lg tracking-tight"
-            >
-              <span className="relative inline-block text-[var(--tedx-red)]">
-                <span className="text-primary">TED</span>
-                <span className="text-primary absolute top-[-10%] ">x</span>
+            <a href="/" className="flex items-center gap-1 font-extrabold text-lg tracking-tight">
+              <span className="relative inline-block text-[#EB0028]">
+                <span className="text-[#EB0028]">TED</span>
+                <span className="text-[#EB0028] absolute top-[-20%]">x</span>
                 <span className="opacity-0">x</span>
               </span>
-              <span className="text-white">UOK</span>
+              <span className="text-white">UoK</span>
             </a>
           </div>
 
@@ -74,12 +73,10 @@ export default function Navbar() {
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
                     <button
-                      className={`flex items-center gap-1 text-white hover:text-red-400 font-medium ${
-                        activeDropdown === l.label ? "text-red-400" : ""
-                      }`}
+                      className={`flex items-center gap-1 px-4 py-2 rounded-full transition-all duration-200 font-medium ${activeDropdown === l.label ? 'bg-white/10 text-white' : 'text-white hover:bg-white/10'}`}
                     >
                       {l.label}
-                      <ChevronDown className="w-4 h-4" />
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === l.label ? 'rotate-180' : ''}`} />
                     </button>
                     {/* Dropdown Menu */}
                     <div
@@ -106,15 +103,17 @@ export default function Navbar() {
                                 <span className="absolute top-[-20%]">x</span>
                                 <span className="opacity-0">x</span>
                               </span>
-                            ) : sub.label === "TEDxUOK" ? (
+                            ) : sub.label === 'TEDxUoK' ? (
                               <span className="font-extrabold">
                                 <span className="relative inline-block">
                                   <span>TED</span>
                                   <span className="absolute top-[-20%]">x</span>
                                   <span className="opacity-0">x</span>
                                 </span>
-                                <span>UOK</span>
+                                <span>UoK</span>
                               </span>
+                            ) : sub.label === 'Theme 2026' ? (
+                              <span className="font-bold">{sub.label}</span>
                             ) : (
                               sub.label
                             )}
@@ -130,8 +129,9 @@ export default function Navbar() {
                   key={l.to}
                   to={l.to!}
                   className={({ isActive }) =>
-                    `text-white hover:text-red-400 font-medium ${
-                      isActive ? "text-red-500" : ""
+                    `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive
+                      ? "bg-white/10 text-white"
+                      : "text-white/80 hover:bg-white/10 hover:text-white"
                     }`
                   }
                 >
@@ -255,7 +255,7 @@ export default function Navbar() {
                                   <span className="absolute top-[-20%]">x</span>
                                   <span className="opacity-0">x</span>
                                 </span>
-                              ) : sub.label === "TEDxUOK" ? (
+                              ) : sub.label === 'TEDxUoK' ? (
                                 <span className="font-extrabold">
                                   <span className="relative inline-block">
                                     <span>TED</span>
@@ -264,8 +264,10 @@ export default function Navbar() {
                                     </span>
                                     <span className="opacity-0">x</span>
                                   </span>
-                                  <span>UOK</span>
+                                  <span>UoK</span>
                                 </span>
+                              ) : sub.label === 'Theme 2026' ? (
+                                <span className="font-bold">{sub.label}</span>
                               ) : (
                                 sub.label
                               )}

@@ -1,6 +1,3 @@
-// app/agenda/page.tsx
-"use client";
-
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -53,7 +50,7 @@ const AgendaPage = () => {
   const fetchAgendaData = async () => {
     try {
       setLoading(true);
-      
+
       // Fetch current active event
       const { data: settingsData } = await supabase
         .from("settings")
@@ -93,7 +90,7 @@ const AgendaPage = () => {
         .order("display_order", { ascending: true });
 
       if (error) throw error;
-      
+
       setAgendaItems(agendaData || []);
     } catch (err: any) {
       console.error("Error fetching agenda data:", err.message);
@@ -104,10 +101,10 @@ const AgendaPage = () => {
 
   const formatTime = (dateTime: string) => {
     const date = new Date(dateTime);
-    return date.toLocaleTimeString([], { 
-      hour: "2-digit", 
+    return date.toLocaleTimeString([], {
+      hour: "2-digit",
       minute: "2-digit",
-      hour12: true 
+      hour12: true
     });
   };
 
@@ -187,26 +184,23 @@ const AgendaPage = () => {
                 return (
                   <div
                     key={item.agenda_item_id}
-                    className={`relative flex flex-col md:flex-row items-center md:justify-between w-full ${
-                      isLeft ? "" : "md:flex-row-reverse"
-                    }`}
+                    className={`relative flex flex-col md:flex-row items-center md:justify-between w-full ${isLeft ? "" : "md:flex-row-reverse"
+                      }`}
                     data-aos={isLeft ? "fade-right" : "fade-left"}
                     data-aos-delay={index * 100}
                   >
                     {/* Content Card */}
                     <div
-                      className={`w-full md:w-[45%] pl-12 sm:pl-16 md:pl-0 ${
-                        isLeft
-                          ? "md:pr-8 lg:pr-12 md:text-right"
-                          : "md:pl-8 lg:pl-12 md:text-left"
-                      }`}
+                      className={`w-full md:w-[45%] pl-12 sm:pl-16 md:pl-0 ${isLeft
+                        ? "md:pr-8 lg:pr-12 md:text-right"
+                        : "md:pl-8 lg:pl-12 md:text-left"
+                        }`}
                     >
                       <div className="group relative bg-[#0E0E0E] border border-[#1F1F1F] p-6 sm:p-8 rounded-xl transition-all duration-500 hover:border-[#EB0028]/40 hover:shadow-[0_4px_20px_-2px_rgba(235,0,40,0.1)]">
                         {/* Time Badge */}
                         <div
-                          className={`inline-flex items-center gap-2 text-[#EB0028] text-xs sm:text-sm mb-4 bg-[#EB0028]/10 px-3 sm:px-4 py-1.5 rounded-full transition-all duration-300 group-hover:bg-[#EB0028]/15 ${
-                            isLeft ? "md:ml-auto" : ""
-                          }`}
+                          className={`inline-flex items-center gap-2 text-[#EB0028] text-xs sm:text-sm mb-4 bg-[#EB0028]/10 px-3 sm:px-4 py-1.5 rounded-full transition-all duration-300 group-hover:bg-[#EB0028]/15 ${isLeft ? "md:ml-auto" : ""
+                            }`}
                         >
                           <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                           {formatTime(item.start_time)}
@@ -223,9 +217,8 @@ const AgendaPage = () => {
                           {/* Speaker Info */}
                           {item.speaker_id && item.speakers && (
                             <div
-                              className={`flex items-center gap-3 text-white font-medium text-base sm:text-lg transition-opacity duration-500 ${
-                                isLeft ? "md:flex-row-reverse" : ""
-                              }`}
+                              className={`flex items-center gap-3 text-white font-medium text-base sm:text-lg transition-opacity duration-500 ${isLeft ? "md:flex-row-reverse" : ""
+                                }`}
                             >
                               <div className="flex items-center gap-3">
                                 <div className="p-1.5 sm:p-2 rounded-full bg-[#EB0028]/10 transition-all duration-300 group-hover:bg-[#EB0028]/20">
