@@ -1,38 +1,38 @@
-import { useState, useEffect } from 'react';
-import type { Partner } from '../types/models';
-import { supabase } from '../lib/supabaseClient';
+import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabase";
 
-export function usePartners() {
-    const [partners, setPartners] = useState<Partner[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        async function fetchPartners() {
-            try {
-                setLoading(true);
-                const { data, error } = await supabase
-                    .from('partners')
-                    .select('*')
-                    .order('name', { ascending: true });
-
-                if (error) {
-                    throw error;
-                }
-
-                if (data) {
-                    setPartners(data as Partner[]);
-                }
-            } catch (err) {
-                console.error('Error fetching partners:', err);
-                setError(err instanceof Error ? err.message : 'Failed to fetch partners');
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchPartners();
-    }, []);
-
-    return { partners, loading, error };
+export interface Partner {
+  id: string;
+  name: string;
+  logo_url: string;
+  tier: "Title" | "Gold" | "Silver" | "Bronze" | "In-kind";
+  website_url?: string;
 }
+
+export const usePartners = () => {
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from("partners")
+          .select("*")
+          .eq("is_active", true);
+
+        if (error) throw error;
+        setPartners(data || []);
+      } catch (err: any) {
+        console.error("Error fetching partners:", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, []);
+
+  return { partners, loading };
+};

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 import { useSpeakers } from '../../hooks/useSpeakers';
 
-export function SpeakersListPage() {
+export default function SpeakersListPage() {
   const { speakers, loading, error } = useSpeakers();
 
   if (loading) {

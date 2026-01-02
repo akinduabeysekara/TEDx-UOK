@@ -5,7 +5,7 @@ import { ArrowLeft, Clock, Calendar, User } from 'lucide-react';
 import { useBlog } from '../../hooks/useBlog';
 import { BlogCard } from '../../components/blog/BlogCard';
 
-export function BlogDetailPage() {
+export default function BlogDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { posts, loading, getRelatedPosts } = useBlog();
   

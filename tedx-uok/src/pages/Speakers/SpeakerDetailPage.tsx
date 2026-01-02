@@ -256,3 +256,5 @@ export function SpeakerDetailPage() {
     </div>
   );
 }
+
+export default SpeakerDetailPage;

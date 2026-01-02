@@ -1,38 +1,39 @@
-import { useState, useEffect } from 'react';
-import type { AgendaItem } from '../types/models';
-import { supabase } from '../lib/supabaseClient';
+import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabase";
 
-export function useAgenda() {
-    const [items, setItems] = useState<AgendaItem[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        async function fetchAgenda() {
-            try {
-                setLoading(true);
-                const { data, error } = await supabase
-                    .from('agenda_items')
-                    .select('*')
-                    .order('start_time', { ascending: true });
-
-                if (error) {
-                    throw error;
-                }
-
-                if (data) {
-                    setItems(data as AgendaItem[]);
-                }
-            } catch (err) {
-                console.error('Error fetching agenda items:', err);
-                setError(err instanceof Error ? err.message : 'Failed to fetch agenda');
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchAgenda();
-    }, []);
-
-    return { items, loading, error };
+export interface AgendaItem {
+  id: number;
+  title: string;
+  start_time: string;
+  end_time: string;
+  type: string;
+  speaker_id?: number;
 }
+
+export const useAgenda = () => {
+  const [agenda, setAgenda] = useState<AgendaItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAgenda = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from("agenda_items")
+          .select("*")
+          .order("start_time", { ascending: true });
+
+        if (error) throw error;
+        setAgenda(data || []);
+      } catch (err: any) {
+        console.error("Error fetching agenda:", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAgenda();
+  }, []);
+
+  return { agenda, loading };
+};

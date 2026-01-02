@@ -1,111 +1,103 @@
-import { motion } from 'motion/react';
-import { useInView } from 'motion/react';
-import { useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { supabase } from "../../api/supabaseClient";
 
-export function HomePage() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const navigate = useNavigate();
+// Import ALL Hooks
+import { useEvents } from "../../hooks/useEvents";
+import { useSpeakers } from "../../hooks/useSpeakers";
+import { usePartners } from "../../hooks/usePartners";
+import { useSettings } from "../../hooks/useSettings";
+
+// Import Components
+import SEO from "../../components/home/SEO";
+import About from "../../components/home/About";
+import Countdown from "../../components/home/Countdown";
+import CTASection from "../../components/home/CTASection";
+import Hero from "../../components/home/Hero";
+import Highlights from "../../components/home/Highlights";
+import Speakers, { type Speaker } from "../../components/home/Speakers";
+import { ThemePreview } from "../../components/home/ThemePreview";
+import { Partners, type Partner } from "../../components/home/Partners";
+
+const SPEAKER_BUCKET = import.meta.env.VITE_SUPABASE_BUCKET_SPEAKER_PHOTOS;
+const PARTNER_BUCKET = import.meta.env.VITE_SUPABASE_BUCKET_PARTNER_LOGOS;
+
+const getImageUrl = (path: string | null, bucketName: string) => {
+  if (!path)
+    return "https://ui-avatars.com/api/?name=TEDx&background=EB0028&color=fff&size=400";
+
+  if (path.startsWith("http")) return path;
+
+  // Uses the specific bucket passed to the function
+  const { data } = supabase.storage.from(bucketName).getPublicUrl(path);
+  return data.publicUrl;
+};
+
+const HomePage = () => {
+  const { settings, loading: settingsLoading } = useSettings();
+  const { event, loading: eventLoading } = useEvents();
+  const { speakers: rawSpeakers, loading: speakersLoading } = useSpeakers(3);
+  const { partners: rawPartners, loading: partnersLoading } = usePartners();
+
+  if (eventLoading || speakersLoading || partnersLoading || settingsLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center text-white">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="h-8 w-8 bg-[#EB0028] rounded-full mb-4 animate-bounce"></div>
+          <p className="tracking-widest uppercase text-sm">
+            Setting The Stage...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const realSpeakers: Speaker[] = rawSpeakers.map((s) => ({
+    id: s.id,
+    name: s.full_name,
+    title: s.title,
+    talkTitle: s.talk_title || "To Be Announced",
+    image: getImageUrl(s.photo_url, SPEAKER_BUCKET),
+  }));
+
+  const realPartners: Partner[] = rawPartners.map((p) => ({
+    id: p.id,
+    name: p.name,
+    tier: p.tier,
+    logo: getImageUrl(p.logo_url, PARTNER_BUCKET),
+  }));
+
+  const eventName = event?.name || "TEDxUOK 2026";
+  const eventDate = event?.date || null;
+
+  const eventVenue = event?.venues?.name || null;
+  const eventTheme = event?.theme || null;
+  const eventDesc = event?.description || null;
+  const ctaLabel = settings?.primary_cta_label;
+  const ctaLink = settings?.primary_cta_url;
 
   return (
-    <div ref={ref} className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-[#0a0a0a] overflow-hidden pt-20">
-        {/* Background Elements */}
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#EB0028] rounded-full blur-[200px] opacity-10"></div>
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#EB0028] rounded-full blur-[200px] opacity-5"></div>
-
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12 text-center">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="mb-8"
-          >
-            <span
-              className="inline-block px-4 py-2 bg-[#EB0028]/10 border border-[#EB0028]/20 rounded-full text-[#EB0028]"
-              style={{ fontWeight: 500, fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-            >
-              Ideas Worth Spreading
-            </span>
-          </motion.div>
-
-          {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 }}
-            className="text-white mb-6"
-            style={{
-              fontWeight: 700,
-              fontSize: 'clamp(48px, 8vw, 96px)',
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
-              marginBottom: '24px'
-            }}
-          >
-            Discover Ideas That
-            <br />
-            <span className="text-[#EB0028]">Shape the Future</span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2 }}
-            className="text-white/60 max-w-2xl mx-auto mb-12"
-            style={{ fontWeight: 300, fontSize: '18px', lineHeight: 1.6 }}
-          >
-            Join us for an inspiring event featuring visionary speakers and innovators who are reshaping the world through powerful ideas.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <button
-              onClick={() => navigate('/speakers')}
-              className="px-8 py-4 bg-[#EB0028] text-white rounded-lg font-semibold hover:bg-[#d4001f] transition-colors flex items-center gap-2"
-            >
-              Explore Speakers
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => navigate('/registration')}
-              className="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-lg font-semibold hover:bg-white/20 transition-colors"
-            >
-              Register Now
-            </button>
-          </motion.div>
-
-          {/* Stats Section */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.5 }}
-            className="mt-20 grid grid-cols-3 gap-8 max-w-2xl mx-auto"
-            >
-            <div>
-              <div className="text-4xl font-bold text-[#EB0028] mb-2">50+</div>
-              <p className="text-white/60 text-sm">Expert Speakers</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-[#EB0028] mb-2">1000+</div>
-              <p className="text-white/60 text-sm">Attendees Expected</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-[#EB0028] mb-2">1 Day</div>
-              <p className="text-white/60 text-sm">Packed with Ideas</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-    </div>
+    <>
+      <SEO
+        eventName={eventName}
+        description={`Join us at ${eventName}: ${eventTheme}. ${eventDesc}`}
+      />
+      <div className="min-h-screen bg-background relative top-[-65px]">
+        <Hero
+          date={eventDate}
+          venue={eventVenue}
+          theme={eventTheme}
+          ctaLabel={ctaLabel}
+          ctaLink={ctaLink}
+        />
+        <Countdown date={eventDate} />
+        <About description={eventDesc} />
+        <Highlights />
+        <ThemePreview theme={eventTheme} description={eventDesc} />
+        <Speakers speakers={realSpeakers} />
+        <Partners partners={realPartners} />
+        <CTASection ctaLabel={ctaLabel} ctaLink={ctaLink} />
+      </div>
+    </>
   );
-}
+};
+
+export default HomePage;
